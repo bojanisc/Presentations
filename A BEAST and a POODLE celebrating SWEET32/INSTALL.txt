@@ -1,0 +1,37 @@
+Instructions for installation:
+
+- You will need a Windows VM and a Linux VM.
+- Recommended Linux distribution is Ubuntu 14.04.6 LTS - the only reason being
+  that SSLv3 will be supported out of box so you don't need to modify anything
+- Install the following packages:
+
+# apt install open-vm-tools open-vm-tools-desktop
+# apt install python python3
+# apt install apache2
+
+- Enable SSL:
+
+# a2enmod ssl
+
+- Put the provided ssl.conf file in /etc/apache2/mods-enabled
+- Your Apache server should now support SSLv3
+
+- Copy the "Web site" directory contents into /var/www/html
+
+- You are now basically set. You can simulate a MitM attack but if you just 
+  want to demonstrate POODLE, extract the exploit from POODLEAttack-master.zip
+  and run it as below:
+
+# python3 poodle-exploit.py <IP> 4443 127.0.0.1 443 --start-block 50 --stop-block 51
+
+  Where <IP> is your Ubuntu VM IP address.
+
+- In Windows VM open Firefox and connect to https://<IP>
+- Login with username "user" and password "sec642".
+
+Mega credit to mpgn_x64 for the Python PoC.
+Original PoC available at: https://github.com/mpgn
+Twitter: https://twitter.com/mpgn_x64
+
+
+Have problems? Let me know at bojan.isc@gmail.com
